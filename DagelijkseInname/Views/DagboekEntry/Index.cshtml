@@ -1,0 +1,52 @@
+﻿@model IEnumerable<DagelijkseInname.Models.DagboekEntryModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DatumDagboekentry)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotaalAanVetGeconsumeerdInGram)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotaalAanKoolhydratenGeconsumeerdInGram)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotaalAanEiwittenGeconsumeerdInGram)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotaalAanCalorieenGeconsumeerd)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatumDagboekentry)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotaalAanVetGeconsumeerdInGram)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotaalAanKoolhydratenGeconsumeerdInGram)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotaalAanEiwittenGeconsumeerdInGram)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotaalAanCalorieenGeconsumeerd)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
