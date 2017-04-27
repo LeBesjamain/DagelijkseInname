@@ -58,7 +58,7 @@ namespace DagelijkseInname.Controllers
                 if (dagboekentry != null)
                 {
                     dagboekentry.GeconsumeerdInGram += dagboekentryModel.GeconsumeerdInGram;
-                    _dagboekEntryRepository.Nieuw(dagboekentry);
+                    _dagboekEntryRepository.Wijzig(dagboekentry);
                 }
                 else
                 {

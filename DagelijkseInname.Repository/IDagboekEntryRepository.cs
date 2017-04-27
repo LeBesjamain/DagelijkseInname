@@ -11,6 +11,6 @@ namespace DagelijkseInname.Repository
         bool BestaatDagboekentryVoorSpecifiekeDatum(int productId, DateTime datum);
         DagboekEntry HaalDagboekentryOp(int productId);
         List<DagboekEntry> OverzichtVanTotalenPerDag(int aantalDagenTerug);
-        void Update(DagboekEntry dagboekEntry);
+        void Wijzig(DagboekEntry dagboekEntry);
     }
 }

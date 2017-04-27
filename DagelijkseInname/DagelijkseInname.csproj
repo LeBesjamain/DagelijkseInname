@@ -182,15 +182,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704192023481_InitialCreate.cs" />
-    <Compile Include="Migrations\201704192023481_InitialCreate.Designer.cs">
-      <DependentUpon>201704192023481_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704231343194_23.04.2017.342.cs" />
-    <Compile Include="Migrations\201704231343194_23.04.2017.342.Designer.cs">
-      <DependentUpon>201704231343194_23.04.2017.342.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DagboekEntryModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -276,14 +267,6 @@
       <Project>{7AF2BC5A-E3C7-4245-83CB-875653919033}</Project>
       <Name>DagelijkseInname.Repository</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704192023481_InitialCreate.resx">
-      <DependentUpon>201704192023481_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704231343194_23.04.2017.342.resx">
-      <DependentUpon>201704231343194_23.04.2017.342.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

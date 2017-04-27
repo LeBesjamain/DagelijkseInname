@@ -7,7 +7,7 @@ namespace DagelijkseInname.DataAccess.Configurations
     {
         public DagboekEntryConfiguration()
         {
-            Property(d => d.GeconsumeerdInGram).HasPrecision(18, 4);
+            Property(d => d.GeconsumeerdInGram).HasPrecision(18, 4).IsRequired();
             Ignore(p => p.TotaalAanVetGeconsumeerdInGram);
             Ignore(p => p.TotaalAanKoolhydratenGeconsumeerdInGram);
             Ignore(p => p.TotaalAanEiwittenGeconsumeerdInGram);

@@ -76,7 +76,7 @@ namespace DagelijkseInname.DataAccess.Repositories
             }
         }
 
-        public void Update(DagboekEntry dagboekEntry)
+        public void Wijzig(DagboekEntry dagboekEntry)
         {
             using (var context = new DagelijkseInnameContext())
             {
