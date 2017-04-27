@@ -50,35 +50,40 @@ namespace DagelijkseInname.Controllers
         [Route("nieuw")]
         public ActionResult Nieuw([Bind(Exclude = "Foto")]ProductModel productModel, HttpPostedFileBase foto)
         {
-            try
+            if (ModelState.IsValid)
             {
-                Product product = new Product
+                try
                 {
-                    Naam = productModel.Naam,
-                    HoeveelheidVetPerGram = productModel.HoeveelheidVetPerGram,
-                    HoeveelheidKoolhydratenPerGram = productModel.HoeveelheidKoolhydratenPerGram,
-                    HoeveelheidEiwitPerGram = productModel.HoeveelheidEiwitPerGram,
-                    HoeveelheidKiloCalorieenPerGram = productModel.HoeveelheidKiloCalorieenPerGram
-                };
-
-                if (foto != null && foto.ContentLength > 0)
-                {
-                    using (var reader = new BinaryReader(foto.InputStream))
+                    Product product = new Product
                     {
-                        product.Foto = reader.ReadBytes(foto.ContentLength);
+                        Naam = productModel.Naam,
+                        HoeveelheidVetPerGram = productModel.HoeveelheidVetPerGram,
+                        HoeveelheidKoolhydratenPerGram = productModel.HoeveelheidKoolhydratenPerGram,
+                        HoeveelheidEiwitPerGram = productModel.HoeveelheidEiwitPerGram,
+                        HoeveelheidKiloCalorieenPerGram = productModel.HoeveelheidKiloCalorieenPerGram
+                    };
+
+                    if (foto != null && foto.ContentLength > 0)
+                    {
+                        using (var reader = new BinaryReader(foto.InputStream))
+                        {
+                            product.Foto = reader.ReadBytes(foto.ContentLength);
+                        }
                     }
+
+                    _productRepository.Nieuw(product);
+                }
+                catch (Exception e)
+                {
+                    throw;
                 }
 
-                _productRepository.Nieuw(product);
-            }
-            catch (Exception e)
-            {
-                throw;
+                TempData["Success"] = "Product is opgeslagen.";
+
+                return RedirectToAction("Nieuw");
             }
 
-            TempData["Success"] = "Product is opgeslagen.";
-
-            return RedirectToAction("Nieuw");
+            return View();
         }
 
         [HttpGet]
@@ -105,56 +110,61 @@ namespace DagelijkseInname.Controllers
         [Route("wijzig/{productId:int}")]
         public ActionResult Wijzig([Bind(Exclude = "Foto")]ProductModel productModel, HttpPostedFileBase foto)
         {
-            var product = _productRepository.HaalProductOp(productModel.Id);
-
-            if (product != null)
+            if (ModelState.IsValid)
             {
-                if (product.Naam != productModel.Naam)
-                {
-                    product.Naam = productModel.Naam;
-                }
+                var product = _productRepository.HaalProductOp(productModel.Id);
 
-                if ((foto != null) && (foto.ContentLength > 0))
+                if (product != null)
                 {
-                    using (var reader = new BinaryReader(foto.InputStream))
+                    if (product.Naam != productModel.Naam)
                     {
-                        product.Foto = reader.ReadBytes(foto.ContentLength);
+                        product.Naam = productModel.Naam;
+                    }
+
+                    if ((foto != null) && (foto.ContentLength > 0))
+                    {
+                        using (var reader = new BinaryReader(foto.InputStream))
+                        {
+                            product.Foto = reader.ReadBytes(foto.ContentLength);
+                        }
+                    }
+
+                    if (product.HoeveelheidVetPerGram != productModel.HoeveelheidVetPerGram)
+                    {
+                        product.HoeveelheidVetPerGram = productModel.HoeveelheidVetPerGram;
+                    }
+
+                    if (product.HoeveelheidKoolhydratenPerGram != productModel.HoeveelheidKoolhydratenPerGram)
+                    {
+                        product.HoeveelheidKoolhydratenPerGram = productModel.HoeveelheidKoolhydratenPerGram;
+                    }
+
+                    if (product.HoeveelheidEiwitPerGram != productModel.HoeveelheidEiwitPerGram)
+                    {
+                        product.HoeveelheidEiwitPerGram = productModel.HoeveelheidEiwitPerGram;
+                    }
+
+                    if (product.HoeveelheidKiloCalorieenPerGram != productModel.HoeveelheidKiloCalorieenPerGram)
+                    {
+                        product.HoeveelheidKiloCalorieenPerGram = productModel.HoeveelheidKiloCalorieenPerGram;
                     }
                 }
 
-                if (product.HoeveelheidVetPerGram != productModel.HoeveelheidVetPerGram)
+                try
                 {
-                    product.HoeveelheidVetPerGram = productModel.HoeveelheidVetPerGram;
+                    _productRepository.Wijzig(product);
+                }
+                catch (Exception)
+                {
+                    throw;
                 }
 
-                if (product.HoeveelheidKoolhydratenPerGram != productModel.HoeveelheidKoolhydratenPerGram)
-                {
-                    product.HoeveelheidKoolhydratenPerGram = productModel.HoeveelheidKoolhydratenPerGram;
-                }
+                TempData["Success"] = "Product is gewijzigd.";
 
-                if (product.HoeveelheidEiwitPerGram != productModel.HoeveelheidEiwitPerGram)
-                {
-                    product.HoeveelheidEiwitPerGram = productModel.HoeveelheidEiwitPerGram;
-                }
-
-                if (product.HoeveelheidKiloCalorieenPerGram != productModel.HoeveelheidKiloCalorieenPerGram)
-                {
-                    product.HoeveelheidKiloCalorieenPerGram = productModel.HoeveelheidKiloCalorieenPerGram;
-                }
+                return RedirectToAction("Wijzig");
             }
 
-            try
-            {
-                _productRepository.Wijzig(product);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-            TempData["Success"] = "Product is gewijzigd.";
-
-            return RedirectToAction("Wijzig");
+            return View();
         }
     }
 }

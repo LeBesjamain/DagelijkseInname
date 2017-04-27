@@ -51,35 +51,40 @@ namespace DagelijkseInname.Controllers
         [Route("{productId:int}")]
         public ActionResult Nieuw(DagboekEntryModel dagboekentryModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                DagboekEntry dagboekentry = _dagboekEntryRepository.HaalDagboekentryOp(dagboekentryModel.ProductId);
+                try
+                {
+                    DagboekEntry dagboekentry = _dagboekEntryRepository.HaalDagboekentryOp(dagboekentryModel.ProductId);
 
-                if (dagboekentry != null)
-                {
-                    dagboekentry.GeconsumeerdInGram += dagboekentryModel.GeconsumeerdInGram;
-                    _dagboekEntryRepository.Wijzig(dagboekentry);
-                }
-                else
-                {
-                    DagboekEntry dagboekEntry = new DagboekEntry
+                    if (dagboekentry != null)
                     {
-                        Datum = DateTime.Today,
-                        GeconsumeerdInGram = dagboekentryModel.GeconsumeerdInGram,
-                        ProductId = dagboekentryModel.ProductId
-                    };
+                        dagboekentry.GeconsumeerdInGram += dagboekentryModel.GeconsumeerdInGram;
+                        _dagboekEntryRepository.Wijzig(dagboekentry);
+                    }
+                    else
+                    {
+                        DagboekEntry dagboekEntry = new DagboekEntry
+                        {
+                            Datum = DateTime.Today,
+                            GeconsumeerdInGram = dagboekentryModel.GeconsumeerdInGram,
+                            ProductId = dagboekentryModel.ProductId
+                        };
 
-                    _dagboekEntryRepository.Nieuw(dagboekEntry);
+                        _dagboekEntryRepository.Nieuw(dagboekEntry);
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                throw;
+                catch (Exception e)
+                {
+                    throw;
+                }
+
+                TempData["Success"] = "Dagboekentry is opgeslagen.";
+
+                return RedirectToAction("Index", "Product");
             }
 
-            TempData["Success"] = "Dagboekentry is opgeslagen.";
-
-            return RedirectToAction("Index", "Product");
+            return View();
         }
     }
 }
